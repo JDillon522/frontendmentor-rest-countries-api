@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { BehaviorSubject, combineLatest, debounceTime, map, Observable, switchMap, take } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
+import { BehaviorSubject, combineLatest, debounceTime, filter, map, Observable, of, switchMap, take, tap } from 'rxjs';
 import { CountriesApiService } from '../../shared/countries-api/countries-api.service';
 import { ICountry } from '../../shared/countries-api/country';
 
@@ -10,11 +10,23 @@ import { ICountry } from '../../shared/countries-api/country';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements AfterViewInit {
-  public search = new FormControl();
+  public searchForm: FormGroup = new FormGroup({
+    search: new FormControl(),
+    region: new FormControl()
+  });
+  public filterOpts: string[] = [];
 
-  public countries$: Observable<ICountry[]> = this.search.valueChanges.pipe(
+
+  public countries$: Observable<ICountry[]> = this.searchForm.valueChanges.pipe(
     debounceTime(250),
-    switchMap((searchTerm) => this.countries.searchCountries(searchTerm))
+    switchMap((formValue) => {
+      return this.countries.searchCountries(formValue.search, formValue.region);
+    }),
+    tap(res => {
+      if (!this.filterOpts.length) {
+        this.filterOpts = [...new Set(res.map(c => c.subregion))];
+      }
+    })
   );
 
   constructor(
@@ -23,6 +35,6 @@ export class ListComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     // Kick of initial search
-    this.search.setValue('');
+    this.searchForm.setValue({ search: '', region: '' });
   }
 }

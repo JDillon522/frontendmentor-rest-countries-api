@@ -1,4 +1,30 @@
+@use '../../styles/styles.scss' as var;
+
+
 :host {
+  .controls {
+    display: flex;
+    justify-content: space-between;
+
+    mat-form-field {
+      height: 56px;
+      width: 200px;
+      padding: 0 24px;
+      border-radius: var.$base-border-radius;
+      box-shadow: var.$box-shadow;
+
+      @include var.themed() {
+        background-color: var.theme("foreground");
+        color: var.theme("color");
+      }
+
+      mat-select {
+        @include var.base-typography();
+        font-weight: 400;
+        line-height: 20px;
+      }
+    }
+  }
 
   .countries {
     // I dont like grid!

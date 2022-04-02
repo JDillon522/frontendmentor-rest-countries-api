@@ -1,0 +1,50 @@
+@use '../../styles/styles.scss' as var;
+
+$card-height: 336px;
+$img-height: 160px;
+$body-height: calc($card-height - $img-height);
+
+:host {
+  width: 264px;
+  height: 336px;
+  box-shadow: var.$box-shadow;
+  border-radius: var.$base-border-radius;
+  // margin: 0 calc(75px / 2) 75px;
+
+  @include var.themed() {
+    background-color: var.theme('foreground');
+  }
+
+  .img-wrapper {
+    height: 50%;
+
+    img {
+      width: 100%;
+      border-radius: var.$base-border-radius var.$base-border-radius 0 0;
+    }
+  }
+
+  .card {
+    padding: 0 24px;
+    max-height: 50%;
+
+    h3 {
+      margin-bottom: 16px;
+      @include var.header-medium;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        padding-bottom: 8px;
+
+        span {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}

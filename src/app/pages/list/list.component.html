@@ -1,0 +1,8 @@
+<div class="form-field">
+  <mat-icon class="prefix">search</mat-icon>
+  <input placeholder="Search for a country" name="search" matInput [formControl]="search">
+</div>
+
+<section class="countries">
+  <app-country-card [country]="country" *ngFor="let country of countries$ | async"></app-country-card>
+</section>

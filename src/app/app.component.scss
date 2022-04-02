@@ -1,0 +1,23 @@
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .theme {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+}
+
+header {
+  button {
+    mat-icon {
+      transform: rotate(148deg);
+      margin-right: 8px;
+    }
+  }
+}
+

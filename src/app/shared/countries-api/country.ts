@@ -2,7 +2,7 @@ export interface ICountryName {
   common: string;
   official: string;
   nativeName: {
-    spa: {
+    [key: string]: {
       official: string;
       common: string;
     }
@@ -24,6 +24,8 @@ export interface ICountry {
     [key: string]: ICurrency
   },
   capital: string[];
+  cca3: string;
+  ccn3: string;
   altSpellings: string[];
   region: string;
   subregion: string;

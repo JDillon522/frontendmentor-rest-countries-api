@@ -1,0 +1,25 @@
+<ng-container *ngIf="country">
+  <img [src]="country.flags.svg" [alt]="country.name.common">
+
+  <section class="details">
+    <h1>{{country.name.common}}</h1>
+
+    <ul>
+      <li><span>Native Name:</span> {{nativeName}}</li>
+      <li><span>Population: </span>{{country.population | number}}</li>
+      <li><span>Region:</span> {{country.region}}</li>
+      <li><span>Sub Region:</span> {{country.subregion}}</li>
+      <li><span>Capital:</span> {{country.capital[0]}}</li>
+      <li><span>Top Level Domain: </span> {{country.tld[0]}}</li>
+      <li><span>Currencies:</span> {{currencies}}</li>
+      <li><span>Languages:</span> {{languages}}
+      </li>
+    </ul>
+
+    <div class="border-countries">
+      <span>Border Countries: </span>
+      <a *ngFor="let borderCountry of borderingCountries" [routerLink]="[ '/detail', borderCountry.code ]">{{borderCountry.name}}</a>
+      <span *ngIf="!borderingCountries?.length">None</span>
+    </div>
+  </section>
+</ng-container>

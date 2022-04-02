@@ -1,21 +1,70 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, debounceTime, filter, map, Observable, tap } from 'rxjs';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { BehaviorSubject, catchError, debounceTime, filter, forkJoin, map, Observable, of, onErrorResumeNext, tap, zip } from 'rxjs';
 import { ICountry } from './country';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CountriesApiService {
-  private url = 'https://restcountries.com/v3.1/';
-  constructor(private http: HttpClient) { }
+  private url = 'https://restcountries.com/v3.1';
+  private currentUrl = this.router.url;
+  private previousUrl: string = '/home';
+
+  public previousUrl$: Observable<string[]> = this.router.events.pipe(
+    map(event => {
+      if (event instanceof NavigationStart) {
+        this.previousUrl = this.currentUrl
+        this.currentUrl = event.url;
+      }
+
+      return this.previousUrl.split('/');
+    })
+  )
+
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   public searchCountries(term?: string, regions?: string[]): Observable<ICountry[]> {
-    const endpoint = term ? `name/${term}` : 'all';
+    const endpoint = term ? `/name/${term}` : '/all';
     return this.http.get<ICountry[]>(this.url + endpoint)
       .pipe(
         debounceTime(250),
         map(countries => countries.filter(c => regions?.length ? regions.includes(c.subregion) : true ))
       );
   }
+
+  public getCountryDetails(name: string): Observable<ICountry> {
+    return this.http.get<ICountry[]>(`${this.url}/alpha/${name}`)
+      .pipe(
+        map(countries => countries[0])
+      );
+  }
+
+
+  public getBorderingCountryNames(countryAbr: string[]): Observable<IDetailRes[]> {
+    const requests = countryAbr.map(c => {
+      return this.getCountryDetails(c).pipe(
+        catchError(err => of(null))
+      )
+    }) as Observable<ICountry>[];
+
+    return zip(requests).pipe(
+      map(countries => {
+        return countries
+          .filter(c => c)
+          .map(c => {
+            return {
+              name: c.name.common,
+              code: c.ccn3
+            }
+          })
+      })
+    );
+  }
 }
+
+export interface IDetailRes {name: string, code: string};

@@ -9,10 +9,16 @@ $body-height: calc($card-height - $img-height);
   height: 336px;
   box-shadow: var.$box-shadow;
   border-radius: var.$base-border-radius;
-  // margin: 0 calc(75px / 2) 75px;
 
   @include var.themed() {
     background-color: var.theme('foreground');
+  }
+
+  a {
+    text-decoration: none;
+    @include var.themed() {
+      color: var.theme('color');
+    }
   }
 
   .img-wrapper {

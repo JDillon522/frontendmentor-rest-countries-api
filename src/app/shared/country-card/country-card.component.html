@@ -1,19 +1,23 @@
-<div class="img-wrapper">
-  <img [src]="country.flags.svg" [alt]="country.name.common">
-</div>
+<a [routerLink]="[ '/detail', country.ccn3 ]">
 
-<div class="card">
-  <h3>{{country.name.common}}</h3>
+  <div class="img-wrapper">
+    <img [src]="country.flags.svg" [alt]="country.name.common">
+  </div>
 
-  <ul>
-    <li>
-      <span>Population: </span>{{country.population}}
-    </li>
-    <li>
-      <span>Region: </span>{{country.subregion}}
-    </li>
-    <li>
-      <span>Capital: </span>{{country.capital?.[0]}}
-    </li>
-  </ul>
-</div>
+  <div class="card">
+    <h3>{{country.name.common}}</h3>
+
+    <ul>
+      <li>
+        <span>Population: </span>{{country.population | number}}
+      </li>
+      <li>
+        <span>Region: </span>{{country.subregion}}
+      </li>
+      <li>
+        <span>Capital: </span>{{country.capital?.[0]}}
+      </li>
+    </ul>
+  </div>
+
+</a>

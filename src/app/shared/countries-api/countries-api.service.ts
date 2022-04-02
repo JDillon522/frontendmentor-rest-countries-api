@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { BehaviorSubject, catchError, debounceTime, filter, forkJoin, map, Observable, of, onErrorResumeNext, tap, zip } from 'rxjs';
+import { BehaviorSubject, catchError, combineLatest, debounceTime, filter, forkJoin, map, Observable, of, onErrorResumeNext, tap, withLatestFrom, zip } from 'rxjs';
 import { ICountry } from './country';
 
 @Injectable({
@@ -9,24 +9,12 @@ import { ICountry } from './country';
 })
 export class CountriesApiService {
   private url = 'https://restcountries.com/v3.1';
-  private currentUrl = this.router.url;
-  private previousUrl: string = '/home';
-
-  public previousUrl$: Observable<string[]> = this.router.events.pipe(
-    map(event => {
-      if (event instanceof NavigationStart) {
-        this.previousUrl = this.currentUrl
-        this.currentUrl = event.url;
-      }
-
-      return this.previousUrl.split('/');
-    })
-  )
 
   constructor(
-    private http: HttpClient,
-    private router: Router
-  ) { }
+    private http: HttpClient
+  ) {
+
+   }
 
   public searchCountries(term?: string, regions?: string[]): Observable<ICountry[]> {
     const endpoint = term ? `/name/${term}` : '/all';

@@ -8,6 +8,8 @@
   img {
     max-width: 560px;
     min-width: 250px;
+    border-radius: 10px;
+    box-shadow: var.$box-shadow;
   }
 
   .details {
@@ -35,7 +37,7 @@
       justify-content: space-between;
 
       li {
-        width: 50%;
+        width: 45%;
         min-width: 200px;
         padding-bottom: 8px;
         font-size: 16px;
@@ -48,9 +50,11 @@
     }
 
     .border-countries {
+      margin-top: 24px;
       display: flex;
       flex-wrap: wrap;
       justify-content: flex-start;
+      align-items: baseline;
 
       span {
         font-size: 16px;
@@ -62,6 +66,7 @@
       a {
         text-decoration: none;
         @include var.themed() {
+          background-color: var.theme('foreground');
           color: var.theme('color');
         }
 

@@ -1,0 +1,36 @@
+@use '../../styles/styles.scss' as var;
+
+:host {
+  display: flex;
+  flex-direction: column;
+
+  a {
+    margin: 80px 0;
+    width: 115px;
+    height: 40px;
+    border-radius: 6px;
+
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 20px;
+
+    box-shadow: var.$box-shadow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+
+    @include var.themed() {
+      background-color: var.theme("foreground");
+      color: var.theme("color");
+    }
+
+    mat-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      margin-bottom: 3px;
+    }
+  }
+
+}

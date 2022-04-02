@@ -6,8 +6,7 @@ import { CountriesApiService, IDetailRes } from '../../shared/countries-api/coun
 @Component({
   selector: 'app-detail',
   template: `
-    {{previousUrl$ | async | logPipe}}
-    <a [routerLink]="(previousUrl$ | async)">Back</a>
+    <a [routerLink]="['/home']"><mat-icon>west</mat-icon> Back</a>
 
     <app-country-detail [country]="(details$ | async)!" [borderingCountries]="(borderCountries$ | async)!"></app-country-detail>
   `,
@@ -28,7 +27,6 @@ export class DetailComponent implements OnInit {
   );
 
   public borderCountries$!: Observable<IDetailRes[]>;
-  public previousUrl$ = this.api.previousUrl$;
 
   constructor(
     private route: ActivatedRoute,

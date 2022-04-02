@@ -4,6 +4,7 @@ import { DetailComponent } from './detail.component';
 import { RouterModule } from '@angular/router';
 import { CountryDetailModule } from '../../shared/country-detail/country-detail.module';
 import { LogPipeModule } from '../../shared/log-pipe/log-pipe.module';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
@@ -18,7 +19,7 @@ import { LogPipeModule } from '../../shared/log-pipe/log-pipe.module';
       path: ''
     }]),
     CountryDetailModule,
-    LogPipeModule
+    MatIconModule
   ]
 })
 export class DetailModule { }

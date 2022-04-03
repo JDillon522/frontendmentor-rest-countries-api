@@ -10,6 +10,7 @@
     min-width: 250px;
     border-radius: 10px;
     box-shadow: var.$box-shadow;
+    margin-bottom: 24px;
   }
 
   .details {
@@ -37,11 +38,15 @@
       justify-content: space-between;
 
       li {
-        width: 45%;
+        width: 100%;
         min-width: 200px;
         padding-bottom: 8px;
         font-size: 16px;
         line-height: 32px;
+
+        @media screen and (min-width: 800px) {
+          width: 45%;
+        }
 
         span {
           font-weight: 600;

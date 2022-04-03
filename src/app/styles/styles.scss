@@ -241,8 +241,20 @@ input {
 
 .form-field {
   position: relative;
-  margin: 48px 0;
-  max-width: 480px;
+  margin: 12px 0;
+  width: 100%;
+
+  @media screen and (min-width: 800px) {
+    max-width: 375px;
+    margin: 48px 0;
+
+  }
+
+  @media screen and (min-width: 1000px) {
+    margin: 48px 0;
+    max-width: 480px;
+  }
+
 
   .prefix {
     position: absolute;
